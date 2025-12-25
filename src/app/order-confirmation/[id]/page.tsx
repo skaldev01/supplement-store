@@ -153,7 +153,7 @@ export default function OrderConfirmationPage({ params }: PageProps) {
               <div className="p-2 bg-primary/20 rounded-lg">
                 <Package className="h-6 w-6 text-primary" />
               </div>
-              What's Next?
+              What&apos;s Next?
             </CardTitle>
           </CardHeader>
           <CardContent className="space-y-5 pt-6">
@@ -164,7 +164,7 @@ export default function OrderConfirmationPage({ params }: PageProps) {
               <div>
                 <p className="font-bold text-lg">Order Confirmation</p>
                 <p className="text-base text-muted-foreground">
-                  You'll receive an email confirmation shortly with all the details
+                  You&apos;ll receive an email confirmation shortly with all the details
                 </p>
               </div>
             </div>
@@ -175,7 +175,7 @@ export default function OrderConfirmationPage({ params }: PageProps) {
               <div>
                 <p className="font-bold text-lg">Processing</p>
                 <p className="text-base text-muted-foreground">
-                  We'll carefully prepare your order for shipment
+                  We&apos;ll carefully prepare your order for shipment
                 </p>
               </div>
             </div>

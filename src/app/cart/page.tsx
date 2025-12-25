@@ -26,10 +26,6 @@ export default function CartPage() {
     return unsubscribe;
   }, []);
 
-  const handleUpdateQuantity = (productId: string, newQuantity: number) => {
-    store.updateCartItemQuantity(productId, newQuantity);
-  };
-
   const handleRemoveItem = (productId: string) => {
     store.removeFromCart(productId);
   };

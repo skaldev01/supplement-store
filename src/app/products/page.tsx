@@ -3,7 +3,6 @@
 import { useState } from 'react';
 import { ProductCard } from '@/components/products/product-card';
 import { products } from '@/lib/dummy-data';
-import { ProductCategory } from '@/types';
 import { Button } from '@/components/ui/button';
 import {
   Select,
@@ -44,7 +43,7 @@ export default function ProductsPage() {
   ];
 
   // Filter products
-  let filteredProducts = products.filter((product) => {
+  const filteredProducts = products.filter((product) => {
     // Search filter (by name and description)
     const matchesSearch =
       product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -213,7 +212,7 @@ export default function ProductsPage() {
             <span className="text-sm font-semibold text-foreground">Active filters:</span>
             {searchQuery && (
               <Badge variant="secondary" className="cursor-pointer hover:bg-destructive hover:text-destructive-foreground transition-colors px-3 py-1" onClick={() => setSearchQuery('')}>
-                Search: "{searchQuery}" ×
+                Search: &quot;{searchQuery}&quot; ×
               </Badge>
             )}
             {selectedCategory !== 'all' && (
@@ -261,7 +260,7 @@ export default function ProductsPage() {
             </div>
             <p className="text-2xl font-bold mb-3">No products found</p>
             <p className="text-muted-foreground mb-8 text-lg">
-              Try adjusting your filters or search terms to find what you're looking for
+              Try adjusting your filters or search terms to find what you&apos;re looking for
             </p>
             <Button onClick={clearFilters} size="lg" className="px-8">
               Clear All Filters

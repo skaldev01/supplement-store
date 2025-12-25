@@ -9,7 +9,6 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
 import { Star, ShoppingCart, Package, Truck, Shield } from 'lucide-react';
 import { store } from '@/lib/store';
-import { useState } from 'react';
 import { notFound } from 'next/navigation';
 
 interface PageProps {

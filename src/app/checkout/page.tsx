@@ -10,7 +10,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Separator } from '@/components/ui/separator';
-import { ShoppingBag, CreditCard } from 'lucide-react';
+import { CreditCard } from 'lucide-react';
 import {
   Select,
   SelectContent,

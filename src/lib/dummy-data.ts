@@ -125,7 +125,7 @@ export const users: User[] = [
 ];
 
 // Dummy Orders - will be populated with user orders
-export let orders: Order[] = [
+export const orders: Order[] = [
   {
     id: 'ORD-001',
     userId: '2',

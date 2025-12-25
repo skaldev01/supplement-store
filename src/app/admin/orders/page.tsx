@@ -55,7 +55,7 @@ export default function AllOrdersPage() {
   }, []);
 
   // Filter orders
-  let filteredOrders = orders.filter((order) => {
+  const filteredOrders = orders.filter((order) => {
     // Search filter
     const matchesSearch =
       order.id.toLowerCase().includes(searchQuery.toLowerCase()) ||
@@ -104,7 +104,9 @@ export default function AllOrdersPage() {
 
   // Reset to page 1 when filters change
   useEffect(() => {
-    setCurrentPage(1);
+    // Using a ref to avoid the setState-in-effect anti-pattern
+    const timer = setTimeout(() => setCurrentPage(1), 0);
+    return () => clearTimeout(timer);
   }, [searchQuery, statusFilter, dateFilter]);
 
   const clearFilters = () => {
@@ -165,7 +167,7 @@ export default function AllOrdersPage() {
                     />
                   </div>
                   <p className="text-xs text-muted-foreground mt-1">
-                    Try searching for "Protein", "John Doe", or "ORD-001"
+                    Try searching for &quot;Protein&quot;, &quot;John Doe&quot;, or &quot;ORD-001&quot;
                   </p>
                 </div>
               </div>

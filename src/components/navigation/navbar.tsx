@@ -10,15 +10,21 @@ import { store } from '@/lib/store';
 export function Navbar() {
   const [cartCount, setCartCount] = useState(0);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isClient, setIsClient] = useState(false);
 
   useEffect(() => {
+    // Set isClient flag and update cart count to prevent hydration mismatch
+    setIsClient(true);
+    
     const updateState = () => {
       setCartCount(store.getCartItemCount());
     };
 
     updateState();
     const unsubscribe = store.subscribe(updateState);
-    return unsubscribe;
+    return () => {
+      unsubscribe();
+    };
   }, []);
 
   // Close mobile menu when window is resized to desktop
@@ -74,7 +80,7 @@ export function Navbar() {
             <Link href="/cart">
               <Button variant="ghost" size="icon" className="relative hover:bg-primary/10 h-12 w-12">
                 <ShoppingCart className="h-6 w-6" />
-                {cartCount > 0 && (
+                {isClient && cartCount > 0 && (
                   <Badge
                     variant="destructive"
                     className="absolute -top-1 -right-1 h-6 w-6 flex items-center justify-center p-0 text-xs font-bold shadow-lg"
