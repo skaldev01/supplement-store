@@ -48,10 +48,10 @@ export default function OrderDetailPage({ params }: PageProps) {
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50">
-        <div className="container mx-auto px-4 py-8">
-          <div className="text-center py-12">
-            <p className="text-muted-foreground">Loading order details...</p>
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4 py-12">
+          <div className="text-center py-20">
+            <p className="text-xl text-muted-foreground">Loading order details...</p>
           </div>
         </div>
       </div>
@@ -83,45 +83,49 @@ export default function OrderDetailPage({ params }: PageProps) {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4 py-12">
         {/* Back Button */}
         <Link href="/admin/orders">
-          <Button variant="ghost" className="mb-6 hover:bg-white">
-            <ArrowLeft className="mr-2 h-4 w-4" />
+          <Button variant="ghost" className="mb-8 hover:bg-white text-base" size="lg">
+            <ArrowLeft className="mr-2 h-5 w-5" />
             Back to All Orders
           </Button>
         </Link>
 
         {/* Header */}
-        <div className="mb-8">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
+        <div className="mb-12">
+          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6">
             <div>
-              <h1 className="text-4xl font-bold mb-2">Order Details</h1>
-              <p className="text-muted-foreground text-lg">Order #{order.id}</p>
+              <h1 className="text-5xl md:text-6xl font-bold mb-3 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+                Order Details
+              </h1>
+              <p className="text-xl text-muted-foreground font-semibold">Order #{order.id}</p>
             </div>
-            <Badge variant={getStatusVariant(order.status)} className="text-base px-4 py-2 w-fit">
+            <Badge variant={getStatusVariant(order.status)} className="text-lg px-6 py-3 w-fit shadow-md">
               {order.status.toUpperCase()}
             </Badge>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Main Content */}
-          <div className="lg:col-span-2 space-y-6">
+          <div className="lg:col-span-2 space-y-8">
             {/* Order Summary */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Package className="h-5 w-5" />
+            <Card className="border-2 shadow-xl">
+              <CardHeader className="bg-gradient-to-br from-primary/5 to-primary/10 border-b-2">
+                <CardTitle className="flex items-center gap-3 text-2xl">
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <Package className="h-6 w-6 text-primary" />
+                  </div>
                   Order Summary
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="space-y-4">
+              <CardContent className="pt-6">
+                <div className="space-y-5">
                   {order.items.map((item) => (
-                    <div key={item.productId} className="flex gap-4 p-4 border rounded-lg hover:bg-muted/50 transition-colors">
-                      <div className="relative w-20 h-20 bg-gray-100 rounded-lg overflow-hidden flex-shrink-0">
+                    <div key={item.productId} className="flex gap-5 p-5 border-2 rounded-xl hover:border-primary/30 transition-all shadow-sm hover:shadow-md">
+                      <div className="relative w-24 h-24 bg-gradient-to-br from-gray-100 to-gray-50 rounded-xl overflow-hidden flex-shrink-0 shadow-md">
                         <Image
                           src={item.productImage}
                           alt={item.productName}
@@ -130,23 +134,23 @@ export default function OrderDetailPage({ params }: PageProps) {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <h3 className="font-semibold text-lg mb-1">{item.productName}</h3>
-                        <p className="text-sm text-muted-foreground">
+                        <h3 className="font-bold text-xl mb-2">{item.productName}</h3>
+                        <p className="text-sm text-muted-foreground font-medium mb-3">
                           Product ID: {item.productId}
                         </p>
-                        <div className="flex items-center gap-4 mt-2">
-                          <span className="text-sm">
-                            <span className="text-muted-foreground">Qty:</span>{' '}
-                            <span className="font-medium">{item.quantity}</span>
+                        <div className="flex items-center gap-6">
+                          <span className="text-base">
+                            <span className="text-muted-foreground font-medium">Qty:</span>{' '}
+                            <span className="font-bold">{item.quantity}</span>
                           </span>
-                          <span className="text-sm">
-                            <span className="text-muted-foreground">Price:</span>{' '}
-                            <span className="font-medium">${item.price.toFixed(2)}</span>
+                          <span className="text-base">
+                            <span className="text-muted-foreground font-medium">Price:</span>{' '}
+                            <span className="font-bold">${item.price.toFixed(2)}</span>
                           </span>
                         </div>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold text-lg">
+                        <p className="font-bold text-2xl text-primary">
                           ${(item.price * item.quantity).toFixed(2)}
                         </p>
                       </div>
@@ -154,80 +158,86 @@ export default function OrderDetailPage({ params }: PageProps) {
                   ))}
                 </div>
 
-                <Separator className="my-6" />
+                <Separator className="my-8" />
 
                 {/* Totals */}
-                <div className="space-y-3">
-                  <div className="flex justify-between text-base">
-                    <span className="text-muted-foreground">Subtotal</span>
-                    <span className="font-medium">${order.subtotal.toFixed(2)}</span>
+                <div className="space-y-4">
+                  <div className="flex justify-between text-lg">
+                    <span className="text-muted-foreground font-medium">Subtotal</span>
+                    <span className="font-bold text-xl">${order.subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-base">
-                    <span className="text-muted-foreground">Shipping</span>
-                    <span className="font-medium">
-                      {order.shipping === 0 ? 'FREE' : `$${order.shipping.toFixed(2)}`}
+                  <div className="flex justify-between text-lg">
+                    <span className="text-muted-foreground font-medium">Shipping</span>
+                    <span className="font-bold text-xl">
+                      {order.shipping === 0 ? (
+                        <span className="text-green-600">FREE</span>
+                      ) : (
+                        `$${order.shipping.toFixed(2)}`
+                      )}
                     </span>
                   </div>
-                  <div className="flex justify-between text-base">
-                    <span className="text-muted-foreground">Tax (8%)</span>
-                    <span className="font-medium">${order.tax.toFixed(2)}</span>
+                  <div className="flex justify-between text-lg">
+                    <span className="text-muted-foreground font-medium">Tax (8%)</span>
+                    <span className="font-bold text-xl">${order.tax.toFixed(2)}</span>
                   </div>
-                  <Separator />
-                  <div className="flex justify-between text-xl font-bold">
+                  <Separator className="my-4" />
+                  <div className="flex justify-between text-2xl font-bold bg-primary/10 p-5 rounded-xl">
                     <span>Total</span>
-                    <span>${order.total.toFixed(2)}</span>
+                    <span className="text-primary">${order.total.toFixed(2)}</span>
                   </div>
                 </div>
               </CardContent>
             </Card>
 
             {/* Customer Details */}
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <User className="h-5 w-5" />
+            <Card className="border-2 shadow-xl">
+              <CardHeader className="bg-gradient-to-br from-primary/5 to-primary/10 border-b-2">
+                <CardTitle className="flex items-center gap-3 text-2xl">
+                  <div className="p-2 bg-primary/20 rounded-lg">
+                    <User className="h-6 w-6 text-primary" />
+                  </div>
                   Customer Details
                 </CardTitle>
               </CardHeader>
-              <CardContent>
-                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <User className="h-5 w-5 text-primary" />
+              <CardContent className="pt-6">
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+                  <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
+                    <div className="p-3 bg-primary/20 rounded-xl">
+                      <User className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground mb-1">Customer Name</p>
-                      <p className="font-semibold text-lg">{order.userName}</p>
+                      <p className="text-sm text-muted-foreground mb-2 font-medium">Customer Name</p>
+                      <p className="font-bold text-xl">{order.userName}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <Mail className="h-5 w-5 text-primary" />
+                  <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
+                    <div className="p-3 bg-primary/20 rounded-xl">
+                      <Mail className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground mb-1">Email</p>
-                      <p className="font-semibold">{order.userEmail}</p>
+                      <p className="text-sm text-muted-foreground mb-2 font-medium">Email</p>
+                      <p className="font-bold text-lg break-all">{order.userEmail}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <Phone className="h-5 w-5 text-primary" />
+                  <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
+                    <div className="p-3 bg-primary/20 rounded-xl">
+                      <Phone className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground mb-1">Phone</p>
-                      <p className="font-semibold">{order.userPhone}</p>
+                      <p className="text-sm text-muted-foreground mb-2 font-medium">Phone</p>
+                      <p className="font-bold text-lg">{order.userPhone}</p>
                     </div>
                   </div>
 
-                  <div className="flex items-start gap-3">
-                    <div className="p-2 bg-primary/10 rounded-lg">
-                      <MapPin className="h-5 w-5 text-primary" />
+                  <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl md:col-span-2">
+                    <div className="p-3 bg-primary/20 rounded-xl">
+                      <MapPin className="h-6 w-6 text-primary" />
                     </div>
                     <div>
-                      <p className="text-sm text-muted-foreground mb-1">Shipping Address</p>
-                      <div className="font-semibold space-y-0.5">
+                      <p className="text-sm text-muted-foreground mb-2 font-medium">Shipping Address</p>
+                      <div className="font-bold text-base space-y-1">
                         <p>{order.shippingAddress.street}</p>
                         {order.shippingAddress.street2 && (
                           <p>{order.shippingAddress.street2}</p>
@@ -246,13 +256,13 @@ export default function OrderDetailPage({ params }: PageProps) {
           </div>
 
           {/* Sidebar */}
-          <div className="space-y-6">
+          <div className="space-y-8">
             {/* Order Status */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Order Status</CardTitle>
+            <Card className="border-2 shadow-xl">
+              <CardHeader className="bg-gradient-to-br from-primary/5 to-primary/10 border-b-2">
+                <CardTitle className="text-2xl">Order Status</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6 pt-6">
                 <div>
                   <Label htmlFor="status" className="mb-2 block">
                     Update Status
@@ -307,9 +317,9 @@ export default function OrderDetailPage({ params }: PageProps) {
                 </div>
 
                 {selectedStatus !== order.status && (
-                  <div className="bg-blue-50 border border-blue-200 rounded-lg p-3">
-                    <p className="text-sm text-blue-900">
-                      Status updated successfully
+                  <div className="bg-green-50 border-2 border-green-200 rounded-xl p-4">
+                    <p className="text-base text-green-900 font-semibold text-center">
+                      ✓ Status updated successfully
                     </p>
                   </div>
                 )}
@@ -317,29 +327,29 @@ export default function OrderDetailPage({ params }: PageProps) {
             </Card>
 
             {/* Order Information */}
-            <Card>
-              <CardHeader>
-                <CardTitle>Order Information</CardTitle>
+            <Card className="border-2 shadow-xl">
+              <CardHeader className="bg-gradient-to-br from-primary/5 to-primary/10 border-b-2">
+                <CardTitle className="text-2xl">Order Information</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="flex items-start gap-3">
-                  <div className="p-2 bg-primary/10 rounded-lg">
-                    <Calendar className="h-5 w-5 text-primary" />
+              <CardContent className="space-y-6 pt-6">
+                <div className="flex items-start gap-4 p-4 bg-gray-50 rounded-xl">
+                  <div className="p-3 bg-primary/20 rounded-xl">
+                    <Calendar className="h-6 w-6 text-primary" />
                   </div>
                   <div>
-                    <p className="text-sm text-muted-foreground mb-1">Order Date</p>
-                    <p className="font-semibold">{formatDateLong(order.createdAt)}</p>
+                    <p className="text-sm text-muted-foreground mb-2 font-medium">Order Date</p>
+                    <p className="font-bold text-lg">{formatDateLong(order.createdAt)}</p>
                   </div>
                 </div>
-                <Separator />
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Order ID</p>
-                  <p className="font-mono font-semibold">{order.id}</p>
+                <Separator className="my-4" />
+                <div className="p-4 bg-gray-50 rounded-xl">
+                  <p className="text-sm text-muted-foreground mb-2 font-medium">Order ID</p>
+                  <p className="font-mono font-bold text-lg">{order.id}</p>
                 </div>
-                <Separator />
-                <div>
-                  <p className="text-sm text-muted-foreground mb-1">Customer ID</p>
-                  <p className="font-mono">{order.userId}</p>
+                <Separator className="my-4" />
+                <div className="p-4 bg-gray-50 rounded-xl">
+                  <p className="text-sm text-muted-foreground mb-2 font-medium">Customer ID</p>
+                  <p className="font-mono font-bold text-lg">{order.userId}</p>
                 </div>
               </CardContent>
             </Card>

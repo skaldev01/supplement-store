@@ -131,19 +131,21 @@ export default function AllOrdersPage() {
   };
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <div className="container mx-auto px-4 py-8">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4 py-12">
         {/* Header */}
-        <div className="mb-8">
-          <h1 className="text-4xl font-bold mb-2">All Orders</h1>
-          <p className="text-muted-foreground text-lg">
-            View and manage all customer orders
+        <div className="mb-12">
+          <h1 className="text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+            All Orders
+          </h1>
+          <p className="text-xl text-muted-foreground">
+            View and manage all customer orders from your dashboard
           </p>
         </div>
 
         {/* Filters Card */}
-        <Card className="mb-6">
-          <CardContent className="pt-6">
+        <Card className="mb-8 border-2 shadow-lg">
+          <CardContent className="pt-8">
             <div className="space-y-4">
               {/* Search Row */}
               <div className="grid grid-cols-1 gap-4">
@@ -212,11 +214,11 @@ export default function AllOrdersPage() {
 
               {/* Clear Filters */}
               {hasActiveFilters && (
-                <div className="flex items-center justify-between pt-4 border-t">
-                  <p className="text-sm text-muted-foreground">
+                <div className="flex items-center justify-between pt-6 border-t-2">
+                  <p className="text-base font-semibold text-foreground">
                     Active filters applied
                   </p>
-                  <Button variant="ghost" size="sm" onClick={clearFilters}>
+                  <Button variant="ghost" size="default" onClick={clearFilters}>
                     <X className="h-4 w-4 mr-2" />
                     Clear All Filters
                   </Button>
@@ -227,16 +229,16 @@ export default function AllOrdersPage() {
         </Card>
 
         {/* Results Info */}
-        <div className="mb-4 flex items-center justify-between">
-          <p className="text-sm text-muted-foreground">
-            Showing <span className="font-semibold text-foreground">{startIndex + 1}</span>-
-            <span className="font-semibold text-foreground">{Math.min(endIndex, filteredOrders.length)}</span> of{' '}
-            <span className="font-semibold text-foreground">{filteredOrders.length}</span> orders
+        <div className="mb-6 flex items-center justify-between bg-white p-4 rounded-xl border-2 border-gray-100 shadow-sm">
+          <p className="text-base text-muted-foreground font-medium">
+            Showing <span className="font-bold text-primary text-lg">{startIndex + 1}</span>-
+            <span className="font-bold text-primary text-lg">{Math.min(endIndex, filteredOrders.length)}</span> of{' '}
+            <span className="font-bold text-foreground text-lg">{filteredOrders.length}</span> orders
           </p>
         </div>
 
         {/* Orders Table */}
-        <Card>
+        <Card className="border-2 shadow-xl">
           <CardContent className="p-0">
             <div className="overflow-x-auto">
               <Table>
@@ -255,39 +257,39 @@ export default function AllOrdersPage() {
                 <TableBody>
                   {paginatedOrders.length > 0 ? (
                     paginatedOrders.map((order) => (
-                      <TableRow key={order.id} className="hover:bg-muted/50">
-                        <TableCell className="font-medium">{order.id}</TableCell>
+                      <TableRow key={order.id} className="hover:bg-primary/5 transition-colors">
+                        <TableCell className="font-bold">{order.id}</TableCell>
                         <TableCell>
                           <div>
-                            <p className="font-medium">{order.userName}</p>
+                            <p className="font-bold">{order.userName}</p>
                             <p className="text-sm text-muted-foreground">{order.userEmail}</p>
                           </div>
                         </TableCell>
                         <TableCell>
                           <div className="text-sm">
                             {order.items.map((item, idx) => (
-                              <div key={idx} className="text-muted-foreground">
+                              <div key={idx} className="text-muted-foreground font-medium">
                                 {item.productName}
                               </div>
                             ))}
                           </div>
                         </TableCell>
-                        <TableCell>{order.items.length}</TableCell>
+                        <TableCell className="font-semibold">{order.items.length}</TableCell>
                         <TableCell>
-                          <Badge variant={getStatusVariant(order.status)}>
+                          <Badge variant={getStatusVariant(order.status)} className="text-sm px-3 py-1">
                             {order.status}
                           </Badge>
                         </TableCell>
-                        <TableCell className="text-sm">
+                        <TableCell className="text-sm font-medium">
                           {formatDate(order.createdAt)}
                         </TableCell>
-                        <TableCell className="text-right font-medium">
+                        <TableCell className="text-right font-bold text-primary text-lg">
                           ${order.total.toFixed(2)}
                         </TableCell>
                         <TableCell className="text-right">
                           <Link href={`/admin/orders/${order.id}`}>
-                            <Button variant="ghost" size="sm">
-                              <Eye className="h-4 w-4" />
+                            <Button variant="ghost" size="sm" className="hover:bg-primary/10">
+                              <Eye className="h-5 w-5" />
                             </Button>
                           </Link>
                         </TableCell>
@@ -295,8 +297,14 @@ export default function AllOrdersPage() {
                     ))
                   ) : (
                     <TableRow>
-                      <TableCell colSpan={8} className="text-center py-12 text-muted-foreground">
-                        No orders found matching your criteria
+                      <TableCell colSpan={8} className="text-center py-16">
+                        <div className="flex flex-col items-center gap-4">
+                          <div className="w-16 h-16 bg-muted rounded-full flex items-center justify-center">
+                            <Search className="h-8 w-8 text-muted-foreground" />
+                          </div>
+                          <p className="text-xl font-semibold">No orders found</p>
+                          <p className="text-muted-foreground">Try adjusting your filters</p>
+                        </div>
                       </TableCell>
                     </TableRow>
                   )}

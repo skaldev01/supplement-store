@@ -162,9 +162,11 @@ export default function CheckoutPage() {
   // Show loading state while checking cart
   if (isLoading) {
     return (
-      <div className="container mx-auto px-4 py-16">
-        <div className="max-w-6xl mx-auto text-center">
-          <p className="text-muted-foreground">Loading checkout...</p>
+      <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+        <div className="container mx-auto px-4 py-20">
+          <div className="max-w-6xl mx-auto text-center">
+            <p className="text-xl text-muted-foreground">Loading checkout...</p>
+          </div>
         </div>
       </div>
     );
@@ -176,20 +178,23 @@ export default function CheckoutPage() {
   }
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <div className="max-w-6xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8">Checkout</h1>
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+      <div className="container mx-auto px-4 py-12">
+        <div className="max-w-6xl mx-auto">
+          <h1 className="text-4xl md:text-5xl font-bold mb-10 bg-gradient-to-r from-foreground to-foreground/70 bg-clip-text text-transparent">
+            Checkout
+          </h1>
 
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           {/* Checkout Form */}
           <div className="lg:col-span-2">
             <form onSubmit={handleSubmit}>
               {/* Shipping Information */}
-              <Card className="mb-6">
-                <CardHeader>
-                  <CardTitle>Shipping Information</CardTitle>
+              <Card className="mb-8 border-2 shadow-lg">
+                <CardHeader className="bg-gradient-to-br from-primary/5 to-primary/10 border-b-2">
+                  <CardTitle className="text-2xl">Shipping Information</CardTitle>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-6 pt-6">
                   {/* Name */}
                   <div className="grid grid-cols-2 gap-4">
                     <div>
@@ -346,8 +351,13 @@ export default function CheckoutPage() {
                 </CardContent>
               </Card>
 
-              <Button type="submit" size="lg" className="w-full" disabled={isSubmitting}>
-                <CreditCard className="mr-2 h-5 w-5" />
+              <Button 
+                type="submit" 
+                size="lg" 
+                className="w-full text-lg py-7 shadow-lg hover:shadow-xl transition-all" 
+                disabled={isSubmitting}
+              >
+                <CreditCard className="mr-2 h-6 w-6" />
                 {isSubmitting ? 'Processing...' : 'Place Order'}
               </Button>
             </form>
@@ -355,16 +365,16 @@ export default function CheckoutPage() {
 
           {/* Order Summary */}
           <div>
-            <Card className="sticky top-24">
-              <CardHeader>
-                <CardTitle>Order Summary</CardTitle>
+            <Card className="sticky top-24 border-2 shadow-xl">
+              <CardHeader className="bg-gradient-to-br from-primary/5 to-primary/10 border-b-2">
+                <CardTitle className="text-2xl">Order Summary</CardTitle>
               </CardHeader>
-              <CardContent className="space-y-4">
+              <CardContent className="space-y-6 pt-6">
                 {/* Products */}
-                <div className="space-y-3">
+                <div className="space-y-4">
                   {cartItems.map((item) => (
-                    <div key={item.product.id} className="flex gap-3">
-                      <div className="relative w-16 h-16 bg-gray-100 rounded overflow-hidden flex-shrink-0">
+                    <div key={item.product.id} className="flex gap-4 p-3 bg-gray-50 rounded-xl">
+                      <div className="relative w-20 h-20 bg-gradient-to-br from-gray-100 to-gray-50 rounded-lg overflow-hidden flex-shrink-0 shadow-sm">
                         <Image
                           src={item.product.imageUrl}
                           alt={item.product.name}
@@ -373,49 +383,54 @@ export default function CheckoutPage() {
                         />
                       </div>
                       <div className="flex-1 min-w-0">
-                        <p className="font-medium text-sm truncate">{item.product.name}</p>
-                        <p className="text-sm text-muted-foreground">Qty: {item.quantity}</p>
+                        <p className="font-bold text-base line-clamp-2">{item.product.name}</p>
+                        <p className="text-sm text-muted-foreground font-medium">Qty: {item.quantity}</p>
                       </div>
-                      <p className="font-medium">${item.product.price.toFixed(2)}</p>
+                      <p className="font-bold text-primary">${item.product.price.toFixed(2)}</p>
                     </div>
                   ))}
                 </div>
 
-                <Separator />
+                <Separator className="my-4" />
 
                 {/* Totals */}
-                <div className="space-y-2">
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Subtotal</span>
-                    <span className="font-medium">${subtotal.toFixed(2)}</span>
+                <div className="space-y-3">
+                  <div className="flex justify-between text-base">
+                    <span className="text-muted-foreground font-medium">Subtotal</span>
+                    <span className="font-bold text-lg">${subtotal.toFixed(2)}</span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Shipping</span>
-                    <span className="font-medium">
-                      {shipping === 0 ? 'FREE' : `$${shipping.toFixed(2)}`}
+                  <div className="flex justify-between text-base">
+                    <span className="text-muted-foreground font-medium">Shipping</span>
+                    <span className="font-bold text-lg">
+                      {shipping === 0 ? (
+                        <span className="text-green-600">FREE</span>
+                      ) : (
+                        `$${shipping.toFixed(2)}`
+                      )}
                     </span>
                   </div>
-                  <div className="flex justify-between text-sm">
-                    <span className="text-muted-foreground">Tax</span>
-                    <span className="font-medium">${tax.toFixed(2)}</span>
+                  <div className="flex justify-between text-base">
+                    <span className="text-muted-foreground font-medium">Tax (8%)</span>
+                    <span className="font-bold text-lg">${tax.toFixed(2)}</span>
                   </div>
-                  <Separator />
-                  <div className="flex justify-between text-lg font-bold">
+                  <Separator className="my-4" />
+                  <div className="flex justify-between text-xl font-bold bg-primary/10 p-4 rounded-xl">
                     <span>Total</span>
-                    <span>${total.toFixed(2)}</span>
+                    <span className="text-primary">${total.toFixed(2)}</span>
                   </div>
                 </div>
 
                 {subtotal < 50 && (
-                  <div className="bg-muted p-3 rounded-lg">
-                    <p className="text-sm text-muted-foreground">
-                      Add ${(50 - subtotal).toFixed(2)} more for free shipping!
+                  <div className="bg-blue-50 border-2 border-blue-200 p-4 rounded-xl">
+                    <p className="text-sm text-blue-900 font-semibold text-center">
+                      Add ${(50 - subtotal).toFixed(2)} more for free shipping! 🚚
                     </p>
                   </div>
                 )}
               </CardContent>
             </Card>
           </div>
+        </div>
         </div>
       </div>
     </div>

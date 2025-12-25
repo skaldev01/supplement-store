@@ -60,7 +60,7 @@ export const products: Product[] = [
     description: 'Complete daily multivitamin with essential vitamins and minerals.',
     price: 24.99,
     category: 'vitamins',
-    imageUrl: 'https://images.unsplash.com/photo-1550572017-4814c6f5a5e6?w=500',
+    imageUrl: 'https://upload.wikimedia.org/wikipedia/commons/8/81/Maltose_syrup.jpg',
     stock: 300,
     brand: 'VitaLife',
     rating: 4.5,
